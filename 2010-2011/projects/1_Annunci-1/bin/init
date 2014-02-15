@@ -1,0 +1,11 @@
+#!/bin/sh
+
+_dir_="$(cd "$(dirname "$0")" && pwd)"; cd "${_dir_}"
+
+mkdir -p "../modules"
+mkdir -p "../resources"
+mkdir -p "../sandbox"
+
+mkdir -p "../sandbox/repo"
+
+mvn -f "./pom.xml" dependency:copy-dependencies

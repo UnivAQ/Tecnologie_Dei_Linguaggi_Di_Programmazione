@@ -1,0 +1,44 @@
+<project name="Java2s" default="compile" basedir=".">
+  <property name="source" value="${basedir}/src"/>
+  <property name="targetdir" value="${basedir}/build"/>
+  <property name="librarydir" value="${basedir}/lib"/>
+  
+  <target name="copy-resources">
+    <copy todir="${targetdir}">
+      <fileset dir="${source}">
+        <exclude name="**/*.java"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <path id="libraries"><fileset dir="${librarydir}"><include name="*.jar"/></fileset></path>
+  
+  <target name="clean">
+     <delete dir="${targetdir}"/>
+     <mkdir dir="${targetdir}"/>
+  </target>
+
+
+  <target name="build">
+    <!-- compile -->
+    <mkdir dir="build"/>
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source" >
+      <classpath>
+        <fileset dir="lib" includes="**/*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="run" depends="clean,copy-resources,build">
+    <copy todir="${targetdir}">
+       <fileset dir="${source}">
+          <exclude name="**/*.java"/>
+       </fileset>
+    </copy>
+    <java classname="SearchTransition" fork="true" classpathref="libraries" maxmemory="1024m" >
+      <classpath path="${targetdir}"/>
+    </java>
+
+  </target>  
+
+</project>

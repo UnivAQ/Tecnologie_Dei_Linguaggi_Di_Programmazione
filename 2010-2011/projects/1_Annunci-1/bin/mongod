@@ -1,0 +1,11 @@
+#!/bin/sh
+
+_dir_="$(cd "$(dirname "$0")" && pwd)"; cd "${_dir_}"
+
+db_dir="../sandbox/db/"
+
+mkdir -p "${db_dir}"
+
+cd "${db_dir}"
+
+mongod --rest --directoryperdb --dbpath .
